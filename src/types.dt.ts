@@ -1,0 +1,1 @@
+type Strategy = 'page' | 'embedded'

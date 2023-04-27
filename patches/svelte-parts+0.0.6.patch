@@ -1,0 +1,154 @@
+diff --git a/node_modules/svelte-parts/DropFile.svelte b/node_modules/svelte-parts/DropFile.svelte
+index bd68d0f..3601476 100644
+--- a/node_modules/svelte-parts/DropFile.svelte
++++ b/node_modules/svelte-parts/DropFile.svelte
+@@ -1,48 +1,48 @@
+-<script>import FallbackSvg from "./DropFileFallbackSvg.svelte";
+-export let multiple = false;
+-export let onDrop;
+-export let onEnter = () => {
+-};
+-export let onLeave = () => {
+-};
+-let isOver = false;
+-let input;
+-const handleEnter = () => {
+-  isOver = true;
+-  if (onEnter) {
+-    onEnter();
+-  }
+-};
+-const handleLeave = () => {
+-  isOver = false;
+-  if (onLeave) {
+-    onLeave();
+-  }
+-};
+-const handleDrop = (e) => {
+-  e.preventDefault();
+-  console.log(e.dataTransfer);
+-  const items = Array.from(e.dataTransfer.items);
+-  onDrop(items.map((d) => d.getAsFile()));
+-  isOver = false;
+-};
+-const handleDragOver = (e) => {
+-  e.preventDefault();
+-};
+-const handleChange = (e) => {
+-  e.preventDefault();
+-  if (e.target && e.target.files) {
+-    onDrop(Array.from(e.target.files));
+-  }
+-};
+-const onClick = () => {
+-  input.click();
+-};
+-const onKeyDown = (e) => {
+-  if (e.key === "Enter") {
++<script>
++  import FallbackSvg from "./DropFileFallbackSvg.svelte";
++  export let multiple = false;
++  export let accept = "";
++  export let onDrop;
++  export let onEnter = () => {};
++  export let onLeave = () => {};
++  let isOver = false;
++  let input;
++  const handleEnter = () => {
++    isOver = true;
++    if (onEnter) {
++      onEnter();
++    }
++  };
++  const handleLeave = () => {
++    isOver = false;
++    if (onLeave) {
++      onLeave();
++    }
++  };
++  const handleDrop = (e) => {
++    e.preventDefault();
++    console.log(e.dataTransfer);
++    const items = Array.from(e.dataTransfer.items);
++    onDrop(items.map((d) => d.getAsFile()));
++    isOver = false;
++  };
++  const handleDragOver = (e) => {
++    e.preventDefault();
++  };
++  const handleChange = (e) => {
++    e.preventDefault();
++    if (e.target && e.target.files) {
++      onDrop(Array.from(e.target.files));
++    }
++  };
++  const onClick = () => {
+     input.click();
+-  }
+-};
++  };
++  const onKeyDown = (e) => {
++    if (e.key === "Enter") {
++      input.click();
++    }
++  };
+ </script>
+ 
+ <div
+@@ -64,6 +64,7 @@ const onKeyDown = (e) => {
+ <input
+   id="hidden-input"
+   type="file"
++  {accept}
+   on:change={handleChange}
+   bind:this={input}
+   {multiple}
+@@ -79,7 +80,7 @@ const onKeyDown = (e) => {
+   }
+   #fallback {
+     display: grid;
+-	  align-items: center;
++    align-items: center;
+     width: 100%;
+     height: 200px;
+     border: black solid 1px;
+diff --git a/node_modules/svelte-parts/DropFile.svelte.d.ts b/node_modules/svelte-parts/DropFile.svelte.d.ts
+index 6130b9d..3094b75 100644
+--- a/node_modules/svelte-parts/DropFile.svelte.d.ts
++++ b/node_modules/svelte-parts/DropFile.svelte.d.ts
+@@ -1,21 +1,22 @@
+ import { SvelteComponentTyped } from "svelte";
+ declare const __propDef: {
+-    props: {
+-        multiple?: boolean | undefined;
+-        onDrop: (files: File[]) => void;
+-        onEnter?: (() => void) | undefined;
+-        onLeave?: (() => void) | undefined;
+-    };
+-    events: {
+-        [evt: string]: CustomEvent<any>;
+-    };
+-    slots: {
+-        default: {};
+-    };
++  props: {
++    multiple?: boolean | undefined;
++    onDrop: (files: File[]) => void;
++    onEnter?: (() => void) | undefined;
++    onLeave?: (() => void) | undefined;
++    accept?: string | undefined;
++  };
++  events: {
++    [evt: string]: CustomEvent<any>;
++  };
++  slots: {
++    default: {};
++  };
+ };
+ export type DropFileProps = typeof __propDef.props;
+ export type DropFileEvents = typeof __propDef.events;
+ export type DropFileSlots = typeof __propDef.slots;
+ export default class DropFile extends SvelteComponentTyped<DropFileProps, DropFileEvents, DropFileSlots> {
+ }
+-export {};
++export { };
