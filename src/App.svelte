@@ -45,7 +45,7 @@
     >
   </button>
 
-  <h1>PDFJPEGX</h1>
+  <h1>PDFIMAGEX</h1>
   <h6>extract images from pdf files</h6>
   <div>
     <DropFile multiple onDrop={handleFiles} accept="application/pdf" />
