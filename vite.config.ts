@@ -8,11 +8,21 @@ import { NodeModulesPolyfillPlugin } from '@esbuild-plugins/node-modules-polyfil
 // You don't need to add this to deps, it's included by @esbuild-plugins/node-modules-polyfill
 import rollupNodePolyFill from 'rollup-plugin-node-polyfills'
 
+import commonjs from '@rollup/plugin-commonjs';
+
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [rollupNodePolyFill(), svelte()],
+  base: '/pdfimagex',
+  plugins: [
+    commonjs({
+      include: /node_modules/,
+      transformMixedEsModules: true,
+    }),
+    rollupNodePolyFill(),
+    svelte()],
   resolve: {
     alias: {
+      util: 'rollup-plugin-node-polyfills/polyfills/util',
       'node:buffer': 'rollup-plugin-node-polyfills/polyfills/buffer-es6',
     }
   },
@@ -20,8 +30,17 @@ export default defineConfig({
     esbuildOptions: {
       // Node.js global to browser globalThis
       define: {
-        global: 'globalThis'
+        global: 'globalThis',
       },
+      plugins: [
+        NodeModulesPolyfillPlugin()
+      ]
+
     }
   },
+  build: {
+    commonjsOptions: {
+      transformMixedEsModules: true,
+    },
+  }
 })

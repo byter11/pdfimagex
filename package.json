@@ -21,6 +21,8 @@
     "vite": "^4.3.2"
   },
   "dependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
+    "@rollup/plugin-commonjs": "^24.1.0",
     "buffer": "^6.0.3",
     "events": "^3.3.0",
     "file-type": "^18.3.0",

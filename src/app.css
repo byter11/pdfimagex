@@ -24,8 +24,7 @@ a:hover {
 }
 
 img {
-  max-width: 720px;
-
+  max-width: 320px;
 }
 
 body {
@@ -51,7 +50,7 @@ h1 {
   position: absolute; 
   right: 10px;
   top: 10px;
-  cursor: pointer; 
+  cursor: pointer;
 }
 
 .settings > *:hover { 

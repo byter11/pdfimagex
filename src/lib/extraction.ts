@@ -36,7 +36,6 @@ export class JpegExtractor implements Extractor {
       if (!type) continue
 
       if (type.ext == "jpg") {
-        console.log(type.ext)
         res.push({
           name: `Object#${ref.tag}.jpg`,
           src: URL.createObjectURL(new Blob([u8.buffer], { type: "image/jpg" }))
@@ -44,7 +43,6 @@ export class JpegExtractor implements Extractor {
       }
     }
 
-    console.log(res)
 
     return res
   }
@@ -57,7 +55,7 @@ export class VisiblePageExtractor implements Extractor {
 
     for (let i = 1; i <= doc.numPages; i++) {
       const page = await doc.getPage(i)
-      const viewport = page.getViewport({ scale: 1.0 })
+      const viewport = page.getViewport({ scale: 2.5 })
       canvas.height = viewport.height
       canvas.width = viewport.width
       const renderContext = {
@@ -69,6 +67,8 @@ export class VisiblePageExtractor implements Extractor {
       await page.render(renderContext).promise
 
       trimCanvas(ctx)
+
+      console.log(canvas.width, canvas.height)
       res.push({
         name: `Object#${i}.jpg`,
         src: canvas.toDataURL('image/jpeg', 1.0)
@@ -79,6 +79,7 @@ export class VisiblePageExtractor implements Extractor {
   }
 }
 
+// adapted from https://stackoverflow.com/a/45873660
 // ctx is the 2d context of the canvas to be trimmed
 // This function will return false if the canvas contains no or no non transparent or non whitespace pixels.
 // Returns true if the canvas contains non transparent or non whitespace pixels
